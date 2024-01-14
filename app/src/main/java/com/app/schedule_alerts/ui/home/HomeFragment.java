@@ -95,15 +95,15 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 //                    Toast.makeText(requireContext(), "You touched "+ venue, Toast.LENGTH_SHORT).show();
-                    showDifferentFragment();
+                    showDifferentFragment(venue);
                 }
             });
         }
     }
 
-    private void showDifferentFragment() {
+    private void showDifferentFragment(String venue) {
         // Create an instance of the new fragment you want to show
-        SlideshowFragment anotherFragment = new SlideshowFragment();
+        SlideshowFragment anotherFragment = new SlideshowFragment(venue);
         HomeFragment thisFragment = new HomeFragment();
 
         // Get the FragmentManager

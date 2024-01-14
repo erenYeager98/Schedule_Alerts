@@ -68,6 +68,11 @@ public class SlideshowFragment extends Fragment {
     // Define an array of TextViews and CheckBoxes
     private TextView[] textViews;
     private CheckBox[] checkBoxes;
+    String venue;
+
+    public SlideshowFragment(String venue) {
+        this.venue = venue;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -152,7 +157,9 @@ public class SlideshowFragment extends Fragment {
             // Implement logic to write the text to the file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
                 // Iterate through the TextViews and CheckBoxes
-
+                writer.newLine();
+                writer.write(venue);
+                writer.newLine();
                 for (int i = 0; i < textViews.length; i++) {
                     String text = textViews[i].getText().toString();
                     int isChecked = checkBoxes[i].isChecked() ? 1 : 0;
