@@ -104,6 +104,7 @@ public class HomeFragment extends Fragment {
     private void showDifferentFragment() {
         // Create an instance of the new fragment you want to show
         SlideshowFragment anotherFragment = new SlideshowFragment();
+        HomeFragment thisFragment = new HomeFragment();
 
         // Get the FragmentManager
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -112,7 +113,7 @@ public class HomeFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         // Replace the current fragment with the new fragment
-        fragmentTransaction.replace(R.id.cardContainer, anotherFragment);
+        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, anotherFragment);
 
         // Add the transaction to the back stack (optional)
         fragmentTransaction.addToBackStack(null);
