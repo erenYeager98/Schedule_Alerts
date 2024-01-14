@@ -31,6 +31,7 @@ package com.app.schedule_alerts.ui.home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +43,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.app.schedule_alerts.MainActivity;
 import com.app.schedule_alerts.ProcessExecution;
 import com.app.schedule_alerts.R;
+import com.app.schedule_alerts.ui.slideshow.SlideshowFragment;
 
 import java.util.ArrayList;
 
@@ -90,13 +94,32 @@ public class HomeFragment extends Fragment {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(requireContext(), "You touched "+ venue, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(requireContext(), "You touched "+ venue, Toast.LENGTH_SHORT).show();
+                    showDifferentFragment();
                 }
             });
         }
     }
 
+    private void showDifferentFragment() {
+        // Create an instance of the new fragment you want to show
+        SlideshowFragment anotherFragment = new SlideshowFragment();
 
+        // Get the FragmentManager
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+        // Start a FragmentTransaction
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Replace the current fragment with the new fragment
+        fragmentTransaction.replace(R.id.cardContainer, anotherFragment);
+
+        // Add the transaction to the back stack (optional)
+        fragmentTransaction.addToBackStack(null);
+
+        // Commit the transaction
+        fragmentTransaction.commit();
+    }
 
     @Override
     public void onDestroyView() {

@@ -44,7 +44,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -55,8 +54,16 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.Locale;
 
-public class checkList extends Fragment {
+public class SlideshowFragment extends Fragment {
+    String currentTime = null;
+    SimpleDateFormat sdfTime0 = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
 
     // Define an array of TextViews and CheckBoxes
     private TextView[] textViews;
@@ -70,20 +77,49 @@ public class checkList extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        currentTime = sdfTime0.format(new Date());
 
         // Initialize array of TextViews and CheckBoxes
         textViews = new TextView[]{
                 view.findViewById(R.id.twoSeaters),
                 view.findViewById(R.id.threeSeaters),
                 view.findViewById(R.id.projectors),
-                // Add all other TextViews here
+                view.findViewById(R.id.board),
+                view.findViewById(R.id.key_board),
+                view.findViewById(R.id.CPU),
+                view.findViewById(R.id.mouse),
+                view.findViewById(R.id.HDMI),
+                view.findViewById(R.id.MIC),
+                view.findViewById(R.id.WIFI),
+                view.findViewById(R.id.amplifire),
+                view.findViewById(R.id.ACorNonAC),
+                view.findViewById(R.id.fan),
+                view.findViewById(R.id.light),
+                view.findViewById(R.id.curtain),
+                view.findViewById(R.id.status),
+                view.findViewById(R.id.camera),
+                view.findViewById(R.id.chair)
         };
 
         checkBoxes = new CheckBox[]{
                 view.findViewById(R.id.twoSeatersCB),
                 view.findViewById(R.id.threeSeatersCB),
                 view.findViewById(R.id.projectorsCB),
-                // Add all other CheckBoxes here
+                view.findViewById(R.id.boardCB),
+                view.findViewById(R.id.key_boardCB),
+                view.findViewById(R.id.CPUCB),
+                view.findViewById(R.id.mouseCB),
+                view.findViewById(R.id.HDMICB),
+                view.findViewById(R.id.MICCB),
+                view.findViewById(R.id.WIFICB),
+                view.findViewById(R.id.amplifireCB),
+                view.findViewById(R.id.ACorNonACCB),
+                view.findViewById(R.id.fanCB),
+                view.findViewById(R.id.lightCB),
+                view.findViewById(R.id.curtainCB),
+                view.findViewById(R.id.statusCB),
+                view.findViewById(R.id.cameraCB),
+                view.findViewById(R.id.chairCB)
         };
 
         // Find the Update Button
@@ -107,11 +143,16 @@ public class checkList extends Fragment {
 
         if (externalFilesDir != null) {
             // Create a file in the external files directory
-            File logFile = new File(externalFilesDir, "stocks.txt");
+            File storageDirectory = new File(requireContext().getExternalFilesDir(null), "stocks.txt");
+            if (!storageDirectory.exists()) {
+                storageDirectory.mkdirs();
+            }
+            File logFile = new File(requireContext().getExternalFilesDir(null), "stocks.txt");
 
             // Implement logic to write the text to the file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
                 // Iterate through the TextViews and CheckBoxes
+
                 for (int i = 0; i < textViews.length; i++) {
                     String text = textViews[i].getText().toString();
                     int isChecked = checkBoxes[i].isChecked() ? 1 : 0;
@@ -120,6 +161,7 @@ public class checkList extends Fragment {
                     writer.write(text + "," + isChecked);
                     writer.newLine();
                 }
+                writer.write(String.valueOf(currentTime));
             } catch (IOException e) {
                 e.printStackTrace();
             }
