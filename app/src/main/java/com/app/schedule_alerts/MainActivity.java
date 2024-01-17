@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
         handler = new Handler(Looper.getMainLooper());
         scheduleNotificationCheck();
         Log.i(TAG, "The service has started in foreground.");
-
-
     }
 
     @Override

@@ -29,15 +29,12 @@ package com.app.schedule_alerts.ui.home;
 //        return root;
 //    }
 
-import android.content.Context;
 import android.os.Bundle;
-import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,16 +43,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.app.schedule_alerts.MainActivity;
+import com.app.schedule_alerts.LogDataAsyncTask;
 import com.app.schedule_alerts.ProcessExecution;
 import com.app.schedule_alerts.R;
-import com.app.schedule_alerts.ui.slideshow.SlideshowFragment;
+import com.app.schedule_alerts.ui.slideshow.ChecklistFragment;
 
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+    LogDataAsyncTask logDataAsyncTask = new LogDataAsyncTask();
 
-//    private ArrayList<String> venueList; // Assuming this is your ArrayList
+
+    //    private ArrayList<String> venueList; // Assuming this is your ArrayList
     ArrayList<String> venueList ;
 
     @Nullable
@@ -103,7 +102,7 @@ public class HomeFragment extends Fragment {
 
     private void showDifferentFragment(String venue) {
         // Create an instance of the new fragment you want to show
-        SlideshowFragment anotherFragment = new SlideshowFragment(venue);
+        ChecklistFragment anotherFragment = new ChecklistFragment(venue);
         HomeFragment thisFragment = new HomeFragment();
 
         // Get the FragmentManager
@@ -114,7 +113,7 @@ public class HomeFragment extends Fragment {
 
         // Replace the current fragment with the new fragment
         fragmentTransaction.replace(R.id.nav_host_fragment_content_main, anotherFragment);
-
+        fragmentTransaction.setReorderingAllowed(true);
         // Add the transaction to the back stack (optional)
         fragmentTransaction.addToBackStack(null);
 

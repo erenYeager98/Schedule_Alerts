@@ -48,6 +48,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.app.schedule_alerts.LogDataAsyncTask;
 import com.app.schedule_alerts.R;
 
 import java.io.BufferedWriter;
@@ -55,22 +56,20 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.Locale;
 
-public class SlideshowFragment extends Fragment {
+public class ChecklistFragment extends Fragment {
+    LogDataAsyncTask logDataAsyncTask = new LogDataAsyncTask();
+
     String currentTime = null;
     SimpleDateFormat sdfTime0 = new SimpleDateFormat("HH:mm", Locale.getDefault());
-
-
     // Define an array of TextViews and CheckBoxes
     private TextView[] textViews;
     private CheckBox[] checkBoxes;
     String venue;
 
-    public SlideshowFragment(String venue) {
+    public ChecklistFragment(String venue) {
         this.venue = venue;
     }
 
@@ -136,6 +135,7 @@ public class SlideshowFragment extends Fragment {
             public void onClick(View v) {
                 // Handle the logic to log the string in a text file
                 logCheckedText();
+                logDataAsyncTask.execute("The data to be executed");
             }
         });
     }
