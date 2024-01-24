@@ -33,8 +33,10 @@ public class UpdateCSVData extends AsyncTask<String, Void, Boolean> {
             InputStream inputStream = connection.getInputStream();
 
             // Get app-specific external storage directory
-            File storageDirectory = applicationContext.getExternalFilesDir(null);
-
+            File storageDirectory = new File(applicationContext.getExternalFilesDir(null),"");
+            if (!storageDirectory.exists()) {
+                storageDirectory.mkdirs();
+            }
             // Provide a filename for the output file
             File outputFile = new File(storageDirectory, "data.csv");
             FileOutputStream outputStream = new FileOutputStream(outputFile);

@@ -51,10 +51,6 @@ import androidx.fragment.app.Fragment;
 import com.app.schedule_alerts.LogDataAsyncTask;
 import com.app.schedule_alerts.R;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -134,45 +130,68 @@ public class ChecklistFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Handle the logic to log the string in a text file
-                logCheckedText();
-                logDataAsyncTask.execute("The data to be executed");
+
+                logDataAsyncTask.execute(logCheckedText());
             }
         });
     }
 
     // ...
 
-    private void logCheckedText() {
+
         // Get the external files directory for your app
-        File externalFilesDir = requireContext().getExternalFilesDir(null);
+//        File externalFilesDir = requireContext().getExternalFilesDir(null);
+//
+//        if (externalFilesDir != null) {
+//            // Create a file in the external files directory
+//            File storageDirectory = new File(requireContext().getExternalFilesDir(null), "stocks.txt");
+//            if (!storageDirectory.exists()) {
+//                storageDirectory.mkdirs();
+//            }
+//            File logFile = new File(requireContext().getExternalFilesDir(null), "stocks.txt");
+//
+//            // Implement logic to write the text to the file
+//            try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
+//                // Iterate through the TextViews and CheckBoxes
+//                writer.newLine();
+//                writer.write(venue);
+//                writer.newLine();
+//                for (int i = 0; i < textViews.length; i++) {
+//                    String text = textViews[i].getText().toString();
+//                    int isChecked = checkBoxes[i].isChecked() ? 1 : 0;
+//
+//                    // Log the text and the checkbox state in the file
+//                    writer.write(text + "," + isChecked);
+//                    writer.newLine();
+//                }
+//                writer.write(String.valueOf(currentTime));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        private String logCheckedText() {
+            StringBuilder logString = new StringBuilder();
 
-        if (externalFilesDir != null) {
-            // Create a file in the external files directory
-            File storageDirectory = new File(requireContext().getExternalFilesDir(null), "stocks.txt");
-            if (!storageDirectory.exists()) {
-                storageDirectory.mkdirs();
-            }
-            File logFile = new File(requireContext().getExternalFilesDir(null), "stocks.txt");
+            // Append current time to log string
+            logString.append(currentTime).append(",");
 
-            // Implement logic to write the text to the file
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true))) {
-                // Iterate through the TextViews and CheckBoxes
-                writer.newLine();
-                writer.write(venue);
-                writer.newLine();
-                for (int i = 0; i < textViews.length; i++) {
-                    String text = textViews[i].getText().toString();
-                    int isChecked = checkBoxes[i].isChecked() ? 1 : 0;
+            // Iterate through TextViews and CheckBoxes to append their statuses
+            for (int i = 0; i < textViews.length; i++) {
+                String status = checkBoxes[i].isChecked() ? "Checked" : "Unchecked";
+                logString.append(status);
 
-                    // Log the text and the checkbox state in the file
-                    writer.write(text + "," + isChecked);
-                    writer.newLine();
+                // Append a comma after each status except the last one
+                if (i < textViews.length - 1) {
+                    logString.append(",");
                 }
-                writer.write(String.valueOf(currentTime));
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+
+            // Append a newline character to separate each log entry
+            logString.append("\n");
+
+            // Write the log string to a file
+            return String.valueOf(logString);
         }
     }
 
-}
+
